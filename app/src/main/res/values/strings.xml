@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ALU Class Attendance App</string>
+    <string name="department">Select Department</string>
+    <string name="session">Select Session</string>
+
+    <string-array name="department_Array">
+        <item>Select Department</item>
+        <item>Computer Sciences</item>
+        <item>International Business and Trade</item>
+        <item>Global Challenges</item>
+        <item>Leadership Core</item>
+        <item>Entrepreneurship</item>
+    </string-array>
+
+    <string-array name="session_Array">
+        <item>Select Session</item>
+        <item>Morning session</item>
+        <item>Afternoon session</item>
+        <item>Evening session</item>
+    </string-array>
+</resources>

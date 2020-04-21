@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="90sp">
+        <EditText
+            android:id="@+id/studentID"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:hint="Tap Student ID card"
+            android:layout_marginVertical="25sp"
+            android:padding="10dp"
+            android:background="@android:color/white"
+            android:drawableLeft="@drawable/id_card_24dp"/>
+
+        <EditText
+            android:id="@+id/studentName"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:hint="Student Name"
+            android:layout_marginVertical="25sp"
+            android:padding="10dp"
+            android:background="@android:color/white"
+            android:drawableLeft="@drawable/student_name_24dp"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:layout_marginVertical="25sp"
+            android:padding="10dp"
+            android:background="@android:color/white"
+            android:drawableLeft="@drawable/password_24dp"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/email_24dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginVertical="25sp"
+            android:padding="10dp"
+            android:background="@android:color/white"
+            android:hint="Email" />
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="40sp"
+            android:padding="10dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:layout_marginRight="180sp"
+                android:drawableLeft="@drawable/gender_24dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                />
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="507dp"
+        android:drawableLeft="@drawable/department_24dp"
+        android:text="Department"
+        android:textSize="20sp"
+        />
+
+
+    <Spinner
+        android:id="@+id/spinnerDepartment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="512dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:entries="@array/department_Array"
+        android:prompt="@string/department" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="579dp"
+        android:drawableLeft="@drawable/session_24dp"
+        android:text="Session"
+        android:textSize="20sp"
+        />
+
+
+    <Spinner
+        android:id="@+id/spinnerSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="581dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:entries="@array/session_Array"
+        android:prompt="@string/session" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="670dp"
+        >
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:textAllCaps="true"
+            android:layout_marginRight="10dp"
+            android:text="Save"
+            />
+        <Button
+            android:id="@+id/read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:textAllCaps="true"
+            android:layout_marginRight="10dp"
+            android:text="Read"
+            />
+        <Button
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_orange_dark"
+            android:textAllCaps="true"
+            android:layout_marginRight="10dp"
+            android:text="Update"
+            />
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:layout_marginRight="10dp"
+            android:text="Delete"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>
