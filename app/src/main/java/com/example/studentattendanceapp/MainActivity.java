@@ -2,7 +2,15 @@ package com.example.studentattendanceapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.RemoteInput;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +19,23 @@ import android.widget.Toast;
 import android.database.Cursor;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String  Channel_ID = "personal_notification";
+    public static final int Notification_ID = 001;
+    public static final String TXT_REPLY= "text reply";
+
 
     StudentDatabase myDatabase;
     EditText emailText,nameText,passwordText,idText;
     Button readData,saveData,updateData,deleteData;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         myDatabase= new StudentDatabase(this);
         nameText= (EditText) findViewById(R.id.studentName);
         emailText= (EditText) findViewById(R.id.email);
@@ -35,6 +51,49 @@ public class MainActivity extends AppCompatActivity {
         delete();
 
     }
+
+
+    public void notification(View view) {
+        CreateNotificationChannel();
+
+        Intent landingIntent = new Intent(this,LandingActivity.class);
+        landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent landingPendingIntent = PendingIntent.getActivity(this,0,landingIntent,PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,Channel_ID);
+        builder.setSmallIcon(R.drawable.ic_message_notification);
+        builder.setContentTitle("Daily reminder");
+        builder.setContentText("It's time to study");
+
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        builder.setContentIntent(landingPendingIntent);
+        builder.setAutoCancel(true);
+
+
+        RemoteInput remoteInput = new RemoteInput.Builder(TXT_REPLY).setLabel("Reply").build();
+        Intent replyIntent = new Intent(this,RemoteReceiver.class);
+        replyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent replyPendingIntent = PendingIntent.getActivity(this,0,replyIntent,PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_message_notification,"Reply",replyPendingIntent).addRemoteInput(remoteInput).build();
+        builder.addAction(action);
+        NotificationManagerCompat  notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(Notification_ID,builder.build());
+    }
+
+
+    private void CreateNotificationChannel () {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            CharSequence name = "Personal Notification";
+            String description = "To include all Notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel NC = new NotificationChannel(Channel_ID, name, importance);
+            NC.setDescription(description);
+            NotificationManager NM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            NM.createNotificationChannel(NC);
+
+        }
+    }
+
     public void delete(){
         deleteData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.show();
     }
+
+
+
+
 
 
 }
