@@ -17,17 +17,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.database.Cursor;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String  Channel_ID = "personal_notification";
     public static final int Notification_ID = 001;
     public static final String TXT_REPLY= "text reply";
 
 
+
     StudentDatabase myDatabase;
     EditText emailText,nameText,passwordText,idText;
-    Button readData,saveData,updateData,deleteData;
-
+    Button readData,saveData,updateData,deleteData, buttonScan;
+    //qr code scanner object
+    private IntentIntegrator qrScan;
 
 
 
@@ -45,11 +52,54 @@ public class MainActivity extends AppCompatActivity {
         readData=(Button) findViewById(R.id.read);
         updateData=(Button) findViewById(R.id.update);
         deleteData=(Button) findViewById(R.id.delete);
+        buttonScan = (Button) findViewById(R.id.buttonScan);
+
+        //intializing scan object
+        qrScan = new IntentIntegrator(this);
+
+        //attaching onclick listener
+        buttonScan.setOnClickListener(this);
         save();
         read();
         update();
         delete();
 
+    }
+
+    //Getting the scan results
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            //if qrcode has nothing in it
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
+            } else {
+                //if qr contains data
+                try {
+                    //converting the data to json
+                    JSONObject obj = new JSONObject(result.getContents());
+                    //setting values to textviews
+                    idText.setText(obj.getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    //to a toast
+                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+
+                    //Display the qrcode result in the Tap Student ID card
+                    idText.setText(result.getContents());
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+//initiating the qr code scan
+        qrScan.initiateScan();
     }
 
 
